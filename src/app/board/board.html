@@ -1,0 +1,41 @@
+<div class="container-board">
+  @for (col of boardservice.columns(); track $index) {
+    <app-column [column]="col" [connectedLists]="connectedLists" (taskDropped)="onDrop($event)" />
+  }
+
+  <div>
+    <div class="column-container">
+      @if (!showInput) {
+        <div class="title">
+          <button (click)="changeShowInput()">
+            <mat-icon aria-hidden="false" aria-label="add icon" fontIcon="add"></mat-icon>
+            <h2>Add another list</h2>
+          </button>
+        </div>
+      } @else {
+        <form (submit)="addColumn($event)">
+          <input
+            appInputStyle="default"
+            [formField]="columnForm.name"
+            placeholder="Add another list"
+          />
+          <footer>
+            <button type="submit" matButton="filled" type="submit">Add</button>
+
+            <!-- <mat-select appInputStyle="default">
+              @for (food of foods; track food) {
+                <mat-option [value]="food.value">{{ food.viewValue }}</mat-option>
+              }
+            </mat-select> -->
+
+            <div class="close-button">
+              <button (click)="changeShowInput()">
+                <mat-icon aria-hidden="false" aria-label="add icon" fontIcon="close"></mat-icon>
+              </button>
+            </div>
+          </footer>
+        </form>
+      }
+    </div>
+  </div>
+</div>

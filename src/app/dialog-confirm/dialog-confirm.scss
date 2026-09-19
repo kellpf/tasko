@@ -1,0 +1,42 @@
+.task-container {
+    padding: 1rem;
+    min-width: 500px;
+
+    mat-form-field {
+        width: 100%;
+    }
+
+    button {
+        border-radius: 10px;
+    }
+
+    header {
+        padding-bottom: 1rem;
+    }
+
+    footer {
+        padding-top: 0.5rem;
+        justify-content: flex-end;
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    h2 {
+        margin: 0.5rem 0;
+    }
+
+    span {
+        margin: 18px 0;
+    }
+
+    .form-input {
+        padding-top: 1rem;
+    }
+
+    textarea {
+        // background-color: aquamarine;
+
+        min-height: 80px;
+    }
+
+}

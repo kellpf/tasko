@@ -1,0 +1,22 @@
+<div class="task-container">
+  <header>
+    <h2>New Task</h2>
+    <span>Add a new task to the board</span>
+  </header>
+  <form (submit)="save($event)">
+    <div class="form-input">
+      <label>Title</label>
+      <input appInputStyle="default" [formField]="taskForm.title" />
+    </div>
+
+    <div class="form-input">
+      <label>Description</label>
+      <textarea appInputStyle="default" [formField]="taskForm.description"></textarea>
+    </div>
+
+    <footer>
+      <button matButton="outlined" (click)="close($event)">Cancel</button>
+      <button matButton="filled" type="submit">Save</button>
+    </footer>
+  </form>
+</div>

@@ -1,0 +1,11 @@
+<div class="task-container">
+  <header>
+    <h2>{{ confirmModel().title }}</h2>
+    <span>{{ confirmModel().description }}</span>
+  </header>
+
+  <footer>
+    <button matButton="outlined" mat-dialog-close>No</button>
+    <button matButton="filled" type="submit"  (click)="confirm()">Yes</button>
+  </footer>
+</div>

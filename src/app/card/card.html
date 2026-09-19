@@ -1,0 +1,19 @@
+<div class="card-container" cdkDrag>
+  <div class="header">
+    <mat-icon aria-hidden="false" aria-label="task icon" fontIcon="drag_indicator"></mat-icon>
+    <div class="text">
+      <h3>{{ task?.title }}</h3>
+      <p>{{ task?.description }}</p>
+      <div *cdkDragPlaceholder class="drag-placeholder"></div>
+
+      <footer>
+        <button class="edit-icon" (click)="editTask()">
+          <mat-icon aria-hidden="false" aria-label="edit icon" fontIcon="edit"></mat-icon>
+        </button>
+        <button class="delete-icon" (click)="deleteTask()">
+          <mat-icon aria-hidden="false" aria-label="delete icon" fontIcon="delete"></mat-icon>
+        </button>
+      </footer>
+    </div>
+  </div>
+</div>

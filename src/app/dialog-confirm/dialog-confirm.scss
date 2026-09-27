@@ -1,6 +1,8 @@
 .task-container {
     padding: 1rem;
     min-width: 500px;
+    background-color: #FBFAFC;
+
 
     mat-form-field {
         width: 100%;
@@ -22,11 +24,19 @@
     }
 
     h2 {
+        color: #20233a;
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: -0.03em;
         margin: 0.5rem 0;
     }
 
     span {
-        margin: 18px 0;
+        display: block;
+        margin-bottom: 1rem !important;
+        color: #797987;
+        font-size: 12px;
+        font-weight: 400;
     }
 
     .form-input {
@@ -34,8 +44,6 @@
     }
 
     textarea {
-        // background-color: aquamarine;
-
         min-height: 80px;
     }
 

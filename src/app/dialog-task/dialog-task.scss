@@ -1,42 +1,159 @@
 .task-container {
-    padding: 1rem;
-    min-width: 500px;
+  min-width: 500px;
+  padding: 1rem 0;
+  background-color: #FBFAFC;
 
-    mat-form-field {
-        width: 100%;
-    }
 
-    button {
-        border-radius: 10px;
-    }
-
-    header {
-        padding-bottom: 1rem;
-    }
-
-    footer {
-        padding-top: 0.5rem;
-        justify-content: flex-end;
-        display: flex;
-        gap: 0.5rem;
-    }
+  header {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #ebe8ee;
+    padding: 0 1rem;
 
     h2 {
-        margin: 0.5rem 0;
+      color: #20233a;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin: 0.5rem 0;
     }
 
-    span {
-        margin: 18px 0;
+    .column-title {
+      color: rgb(110, 110, 122);
+      font-weight: 600;
+      font-size: 12px;
+      
+      mat-icon {
+        color: #8B5CF6;
+        width: 10px;
+        height: 10px;
+        font-size: 10px;
+      }
     }
 
-    .form-input {
-        padding-top: 1rem;
+    .caption {
+      display: block;
+      margin-bottom: 1rem !important;
+      color: #797987;
+      font-size: 12px;
+      font-weight: 400;
+    }
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1rem;
+  }
+
+  .form-input {
+    padding-top: 1rem;
+
+    >label {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  textarea {
+    min-height: 80px;
+  }
+
+  .tag-input-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding-bottom: 0.5rem;
+  }
+
+  .tag-field {
+    flex: 1;
+    min-width: 0;
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
+
+  .tag-field>label,
+  .color-input>label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .color-input {
+    flex-shrink: 0;
+  }
+
+  .color-row {
+    height: 42px;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 0 12px;
+
+    background: white;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+  }
+
+  .color-option {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
+
+    &:hover {
+      transform: scale(1.1);
     }
 
-    textarea {
-        // background-color: aquamarine;
-
-        min-height: 80px;
+    &:focus-visible {
+      outline: none;
+      box-shadow:
+        0 0 0 2px white,
+        0 0 0 4px #3b82f6;
     }
 
+    &.selected {
+      box-shadow:
+        0 0 0 2px white,
+        0 0 0 4px #1e293b;
+    }
+
+    mat-icon {
+      width: 16px;
+      height: 16px;
+      font-size: 16px;
+      color: white;
+    }
+  }
+
+  footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+
+    padding-top: 1.5rem;
+
+    button {
+      border-radius: 10px;
+    }
+  }
 }

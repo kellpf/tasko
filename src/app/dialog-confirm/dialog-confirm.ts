@@ -1,32 +1,23 @@
-import { Component, Inject, OnInit, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { DialogConfig } from '../shared/models/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
-interface ConfirmDialogProp {
-  title: '';
-  description: '';
-}
+
 @Component({
   selector: 'app-dialog-confirm',
   imports: [MatButtonModule, MatDialogModule],
   templateUrl: './dialog-confirm.html',
   styleUrl: './dialog-confirm.scss',
 })
-export class DialogConfirm implements OnInit {
-  protected confirmModel = signal({
-    title: '',
-    description: '',
-  });
 
-  constructor(
-    private dialogRef: MatDialogRef<DialogConfirm>,
-    @Inject(MAT_DIALOG_DATA) private data: ConfirmDialogProp,
-  ) {}
-  ngOnInit(): void {
-    if (this.data) this.confirmModel.set({ ...this.data });
-  }
+export class DialogConfirm {
+  private data = inject<DialogConfig>(MAT_DIALOG_DATA);
+  protected confirmModel = signal(this.data);
 
-  confirm() {
+  private dialogRef = inject(MatDialogRef<DialogConfirm>);
+
+  protected confirm() {
     this.dialogRef.close(true);
   }
 }

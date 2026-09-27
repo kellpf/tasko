@@ -1,8 +1,16 @@
 <div class="task-container">
   <header>
-    <h2>New Task</h2>
-    <span>Add a new task to the board</span>
+    <!-- TODO: ADD COLUMN NAME -->
+    <span class="column-title">
+      <mat-icon>circle</mat-icon>
+      TO DO
+    </span>
+    <h2>{{ data?.id ? 'Edit Task' : 'Create a new Task' }}</h2>
+    <span class="caption">{{
+      data?.id ? 'Update this task' : 'Add the details your team needs to get started'
+    }}</span>
   </header>
+
   <form (submit)="save($event)">
     <div class="form-input">
       <label>Title</label>
@@ -14,8 +22,48 @@
       <textarea appInputStyle="default" [formField]="taskForm.description"></textarea>
     </div>
 
+    <div class="form-input">
+      <div class="tag-input-row">
+        <div class="tag-field">
+          <label>Tags</label>
+          <input
+            appInputStyle="default"
+            placeholder="Type and press Enter"
+            [value]="tagInput()"
+            (input)="tagInput.set($any($event.target).value)"
+            (keydown.enter)="addTag($event)"
+          />
+        </div>
+
+        <div class="color-input">
+          <label>Color</label>
+
+          <div class="color-row" role="group" aria-label="Tag color">
+            @for (color of pickerColors; track color) {
+              <button
+                type="button"
+                class="color-option"
+                [class.selected]="selectedColor() === color"
+                [attr.aria-pressed]="selectedColor() === color"
+                [attr.aria-label]="'Color ' + color"
+                [style.background-color]="palette[color].fg"
+                (click)="selectColor(selectedColor() === color ? null : color)"
+              >
+                @if (selectedColor() === color) {
+                  <mat-icon>check</mat-icon>
+                }
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+    @if (tags().length) {
+      <app-chip [chips]="tags()" [editMode]="true" />
+    }
+
     <footer>
-      <button matButton="outlined" (click)="close($event)">Cancel</button>
+      <button matButton="outlined" type="button" mat-dialog-close>Cancel</button>
       <button matButton="filled" type="submit">Save</button>
     </footer>
   </form>

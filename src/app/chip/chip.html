@@ -1,0 +1,22 @@
+<div class="chips-container">
+  @for (chip of chips(); track $index) {
+    <span
+      class="tag"
+      [style.--chip-fg]="palette[chip.color].fg"
+      [style.--chip-bg]="palette[chip.color].bg"
+      >{{ chip.label }}
+      @if (editMode()) {
+        <button>
+          <svg class="tag__remove-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path
+              d="M7 7L17 17M17 7L7 17"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+      }
+    </span>
+  }
+</div>

@@ -1,38 +1,34 @@
+<app-header />
+
 <div class="container-board">
   @for (col of boardservice.columns(); track $index) {
     <app-column [column]="col" [connectedLists]="connectedLists" (taskDropped)="onDrop($event)" />
   }
-
   <div>
     <div class="column-container">
-      @if (!showInput) {
-        <div class="title">
-          <button (click)="changeShowInput()">
+      @if (!showInput()) {
+          <button class="add-list-button" dottedButtonStyle (click)="changeShowInput()">
             <mat-icon aria-hidden="false" aria-label="add icon" fontIcon="add"></mat-icon>
-            <h2>Add another list</h2>
+         Add another list
           </button>
-        </div>
+
       } @else {
-        <form (submit)="addColumn($event)">
+        <form (submit)="addColumn($event)"  (keydown.escape)="closeInput()">
           <input
             appInputStyle="default"
             [formField]="columnForm.name"
             placeholder="Add another list"
           />
           <footer>
-            <button type="submit" matButton="filled" type="submit">Add</button>
-
-            <!-- <mat-select appInputStyle="default">
-              @for (food of foods; track food) {
-                <mat-option [value]="food.value">{{ food.viewValue }}</mat-option>
-              }
-            </mat-select> -->
+            <button matButton="filled" [disabled]="columnForm().invalid()" type="submit">Add</button>
 
             <div class="close-button">
-              <button (click)="changeShowInput()">
+              <button (click)="changeShowInput()" type="button">
                 <mat-icon aria-hidden="false" aria-label="add icon" fontIcon="close"></mat-icon>
               </button>
             </div>
+
+            <span class="add-list-shortcuts">Enter to add · Esc to cancel</span>
           </footer>
         </form>
       }

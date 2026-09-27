@@ -1,40 +1,32 @@
 import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, input, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
 import { Card } from '../card/card';
+import { DialogConfirm } from '../dialog-confirm/dialog-confirm';
 import { DialogTask } from '../dialog-task/dialog-task';
 import { BoardService } from '../services/board-service';
 import { ColumnProp, Task } from '../shared/models/board';
-import { DialogConfirm } from '../dialog-confirm/dialog-confirm';
-import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-column',
-  imports: [
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    Card,
-    CommonModule,
-    DragDropModule,
-    MatMenuModule,
-  ],
+  imports: [MatInputModule, MatButtonModule, MatIconModule, Card, DragDropModule, MatMenuModule],
   templateUrl: './column.html',
   styleUrl: './column.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Column {
-  column = input.required<ColumnProp>();
-  @Input() connectedLists!: string[];
-  @Output() taskDropped = new EventEmitter<CdkDragDrop<Task[]>>();
-  boardService = inject(BoardService);
+  public column = input.required<ColumnProp>();
+  public connectedLists = input.required<string[]>();
+  public taskDropped = output<CdkDragDrop<Task[]>>();
 
-  constructor(private dialog: MatDialog) {}
+  private boardService = inject(BoardService);
+  private dialog = inject(MatDialog);
 
-  public addTask(columnId: string): void {
+  protected addTask(columnId: string): void {
     this.dialog
       .open(DialogTask)
       .afterClosed()
@@ -44,10 +36,8 @@ export class Column {
       });
   }
 
-  public deleteColumn(column: ColumnProp) {
-    console.log('Voce deseja deletar a coluna', column.title, '?');
-
-    !column.tasks.length
+  protected deleteColumn(column: ColumnProp) {
+    !column.tasks?.length
       ? this.boardService.deleteColumn(column.id)
       : this.dialog
           .open(DialogConfirm, {

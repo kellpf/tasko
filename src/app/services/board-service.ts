@@ -1,4 +1,4 @@
-import { Injectable, signal, Signal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { ColumnProp, Task } from '../shared/models/board';
 import { BOARD_MOCK } from '../shared/mocks/column.mock';
 
@@ -6,22 +6,21 @@ import { BOARD_MOCK } from '../shared/mocks/column.mock';
   providedIn: 'root',
 })
 export class BoardService {
-  private _columns = signal<ColumnProp[]>(BOARD_MOCK);
+  private readonly _columns = signal<ColumnProp[]>(BOARD_MOCK);
 
-  columns = this._columns.asReadonly();
+  readonly columns = this._columns.asReadonly();
 
-  addColumn(name: string): void {
-    const randomId = crypto.randomUUID();
-    const newCol: ColumnProp = { id: randomId, title: name, tasks: [] };
+  addColumn(title: string): void {
+    const newCol: ColumnProp = { id: crypto.randomUUID(), title, tasks: [] };
     this._columns.update((cols) => [...cols, newCol]);
   }
 
-  addTask(columnId: string, task: Task): void {
-    const randomId = crypto.randomUUID();
+  addTask(columnId: string, task: Omit<Task, 'id'>): void {
+    const newTask: Task = { ...task, id: crypto.randomUUID() };
 
     this._columns.update((cols) =>
       cols.map((col) =>
-        col.id === columnId ? { ...col, tasks: [...col.tasks, { ...task, id: randomId }] } : col,
+        col.id === columnId ? { ...col, tasks: [...(col.tasks ?? []), newTask] } : col,
       ),
     );
   }
@@ -30,34 +29,21 @@ export class BoardService {
     this._columns.update((cols) =>
       cols.map((col) =>
         col.id === columnId
-          ? {
-              ...col,
-              tasks: col.tasks.map((t) => (t.id === updatedTask.id ? updatedTask : t)),
-            }
+          ? { ...col, tasks: col.tasks?.map((t) => (t.id === updatedTask.id ? updatedTask : t)) }
           : col,
       ),
     );
   }
 
   deleteColumn(columnId: string): void {
-    this._columns.update((cols) => cols.filter(col => col.id !== columnId));
+    this._columns.update((cols) => cols.filter((col) => col.id !== columnId));
   }
 
-  deleteTask(columnId: string, taskId: string) {
-    this._columns().forEach((col) => {
-      if (col.id === columnId) {
-        console.log('A columa clicada: ', col.title);
-
-        const task = col.tasks.find((task) => task.id === taskId);
-
-        task && console.log('A task encontrada foi: ', task.title);
-      }
-    });
-
+  deleteTask(columnId: string, taskId: string): void {
     this._columns.update((cols) =>
       cols.map((col) =>
         col.id === columnId
-          ? { ...col, tasks: col.tasks.filter((task) => task.id !== taskId) }
+          ? { ...col, tasks: col.tasks?.filter((task) => task.id !== taskId) }
           : col,
       ),
     );

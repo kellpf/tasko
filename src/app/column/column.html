@@ -2,8 +2,8 @@
   class="column-container"
   cdkDropList
   [id]="column().id"
-  [cdkDropListData]="column().tasks"
-  [cdkDropListConnectedTo]="connectedLists"
+  [cdkDropListData]="column().tasks ?? []"
+  [cdkDropListConnectedTo]="connectedLists()"
   (cdkDropListDropped)="taskDropped.emit($event)"
 >
   <div class="title">
@@ -14,21 +14,28 @@
         <mat-icon aria-hidden="false" aria-label="add icon" fontIcon="add"></mat-icon>
       </button>
 
-      <button matIconButton [disableRipple]="true" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <button
+        matIconButton
+        [disableRipple]="true"
+        [matMenuTriggerFor]="menu"
+        aria-label="Example icon-button with a menu"
+      >
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu" xPosition="before">
         <button mat-menu-item (click)="deleteColumn(column())">
-          <!-- <mat-icon>dialpad</mat-icon> -->
           <span>Delete</span>
         </button>
       </mat-menu>
     </div>
-
-    <!-- <button (click)="deleteColumn(column())">delete</button> -->
   </div>
 
-  @for (task of column().tasks; track $index) {
+  @for (task of column().tasks ?? []; track $index) {
     <app-card [task]="task" [columnId]="column().id" />
   }
+
+  <button dottedButtonStyle type="button" (click)="addTask(column().id)">
+    <mat-icon aria-hidden="false" aria-label="add icon" fontIcon="add"></mat-icon>
+    Add task
+  </button>
 </div>

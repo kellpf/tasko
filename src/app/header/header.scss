@@ -1,22 +1,28 @@
 .header {
     display: flex;
-    padding: 16px 24px;
+    padding: 14px;
     min-width: 100%;
-    /* ← garante pelo menos 100vw */
     align-items: center;
 
-    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2);
+    background-color: rgba(251, 250, 247, 0.9);
+    border-bottom: 1px solid #e6e4dd;
+    backdrop-filter: blur(8px);
 
     h1 {
         margin: 0;
-        font-size: 20px;
+        font-size: 16px;
+        color: #172033;
     }
 
-    a {
-        color: purple;
-        font-weight: 550;
-        text-decoration: none;
-        padding-left: 35px;
+    span {
+        color: #000000;
+        font-size: 12px;
+    }
+
+    img {
+        width: 64px;
+        height: 64px;
+        border-radius: 16px;
     }
 
     mat-icon {

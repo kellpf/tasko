@@ -10,6 +10,11 @@ export const BOARD_MOCK: ColumnProp[] = [
         title: 'Create usecase',
         description:
           'Night crowd given field pull sick feet rear mathematics put silence wish orange worry dark which pilot donkey gulf follow fifth weight camp cup',
+        tags: [
+          {label: 'Front-end', color: 'blue'},
+          {label: 'UX', color: 'pink'},
+          {label: 'Database', color: 'green'},
+        ],
       },
       {
         id: '123',
@@ -25,7 +30,7 @@ export const BOARD_MOCK: ColumnProp[] = [
     tasks: [
       {
         id: '123999',
-        title: 'Update images',
+        title: 'Update',
         description:
           'Night crowd given field pull sick feet rear mathematics put silence wish orange worry dark which pilot donkey gulf follow fifth weight camp cup',
       },

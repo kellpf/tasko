@@ -1,5 +1,5 @@
 .column-container {
-    background-color: #fbf9fa;
+    background-color: #EFEEE9;
     width: 300px;
     padding: 1rem;
     border-radius: 10px;
@@ -8,38 +8,26 @@
     .title {
         display: flex;
         justify-content: space-between;
-
-        .buttons {
-
-            button {
-                text-decoration: none !important;
-                border: none;
-                background-color: transparent;
-                padding: 0;
-                // font-size: 20px;
-            }
-
-            // .mdc-icon-button {
-            //     color: red;
-            //     font-size: 12px;
-            //     text-decoration: none;
-            //     // background-color: blue;
-            //     padding: 0;
-            // }
+        button {
+            text-decoration: none !important;
+            border: none;
+            background-color: transparent;
+            padding: 0;
         }
 
-
         mat-icon {
-            font-size: 18px;
+            font-size: 14px;
             padding: 0;
             align-items: center;
         }
     }
 
     h2 {
-        color: #101828;
-        font-weight: 500;
-        font-size: 18px;
         margin: 0;
+        color: #20233a;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 24px;
+        letter-spacing: -0.01em;
     }
 }

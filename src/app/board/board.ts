@@ -1,17 +1,16 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { ActivatedRoute } from '@angular/router';
-import { Column } from '../column/column';
-import { ClickOutsideDirective } from '../shared/directives/click-outside';
-import { form, FormField } from '@angular/forms/signals';
-import { BoardService } from '../services/board-service';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { InputStyleDirective } from '../shared/directives/tk-input';
-import { MatSelectModule } from '@angular/material/select';
-import { CommonModule } from '@angular/common';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CommonModule } from '@angular/common';
+import { Component, inject, signal } from '@angular/core';
+import { form, FormField, required, submit } from '@angular/forms/signals';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { Column } from '../column/column';
+import { Header } from '../header/header';
+import { BoardService } from '../services/board-service';
+import { InputStyleDirective } from '../shared/directives/tk-input';
 import { Task } from '../shared/models/board';
 
 @Component({
@@ -24,51 +23,41 @@ import { Task } from '../shared/models/board';
     MatInputModule,
     Column,
     InputStyleDirective,
-    FormField,
     MatSelectModule,
     CommonModule,
+    Header,
   ],
   templateUrl: './board.html',
   styleUrl: './board.scss',
 })
-export class Board implements OnInit {
-  boardservice = inject(BoardService);
-  public title = '';
-  showInput = false;
+export class Board {
+  protected showInput = signal(false);
 
-  protected columnModel = signal({
-    name: '',
+  protected columnModel = signal({ name: '' });
+  protected columnForm = form(this.columnModel, (schemaPath) => {
+    required(schemaPath.name, { message: 'Column name is required' });
   });
-  protected columnForm = form(this.columnModel);
+  protected boardservice = inject(BoardService);
 
-  constructor(private route: ActivatedRoute) {}
-
-  ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
-      this.title = params['board'];
+  protected addColumn(event: Event): void {
+    event.preventDefault();
+    submit(this.columnForm, async () => {
+      this.boardservice.addColumn(this.columnModel().name);
+      this.columnModel.set({ name: '' });
     });
   }
 
-  addColumn(event: Event): void {
-    event.preventDefault();
-    const columnName = this.columnModel().name;
-    if (columnName) {
-      this.boardservice.addColumn(columnName);
-      this.columnModel.set({ name: '' });
-    }
-  }
-
-  changeShowInput() {
-    this.showInput = !this.showInput;
+  protected changeShowInput() {
+    this.showInput.update((v) => !v);
 
     if (this.columnModel().name) this.columnModel.set({ name: '' });
   }
 
-  get connectedLists(): string[] {
+  protected get connectedLists(): string[] {
     return this.boardservice.columns().map((c) => c.id);
   }
 
-  onDrop(event: CdkDragDrop<Task[]>) {
+  protected onDrop(event: CdkDragDrop<Task[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -79,5 +68,10 @@ export class Board implements OnInit {
         event.currentIndex,
       );
     }
+  }
+
+  protected closeInput(): void {
+    this.showInput.set(false);
+    this.columnModel.set({ name: '' });
   }
 }
